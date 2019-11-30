@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">RoomBooking</string>
+    <string name="building">Building</string>
+    <string name="floor">Floor</string>
+    <string name="admin_tools">Admin Tools</string>
+    <string name="add_building">Add Building</string>
+    <string name="black_arrow_right">Black arrow right</string>
+    <string name="black_building">Black Building</string>
+    <string name="black_room">Black room</string>
+    <string name="add_room">Add Room</string>
+    <string name="black_arrow_left">Black arrow left</string>
+    <string name="description">Description</string>
+    <string name="location">0, 0</string>
+    <string name="floors">Floors</string>
+    <string name="coordinates">Coordinates:</string>
+    <string name="buildingLabel">Building:</string>
+    <string name="close_map">Close Map</string>
+    <string name="make_reservation">Make Reservation</string>
+    <string name="time_to">Time To</string>
+    <string name="time_from">Time From</string>
+    <string name="date">Date</string>
+    <string name="to">To:</string>
+    <string name="from">From:</string>
+    <string name="date_colon">Date:</string>
+    <string name="reservations">Reservations for today:</string>
+    <string name="marker_image">Marker image</string>
+    <string name="floor_colon">Floor:</string>
+    <string name="x_image">X image</string>
+    <string name="your_reservations">Your Reservations</string>
+    <string name="delete_building">Delete Building</string>
+    <string name="delete_room">Delete Room</string>
+    <string name="trash_bin">Trash bin</string>
+    <string name="room_colon">Room:</string>
+</resources>
