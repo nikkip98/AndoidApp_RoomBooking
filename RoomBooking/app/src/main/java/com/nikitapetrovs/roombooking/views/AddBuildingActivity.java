@@ -1,4 +1,4 @@
-package com.nikitapetrovs.roombooking.Views;
+package com.nikitapetrovs.roombooking.views;
 
 import android.app.Activity;
 import android.app.AlertDialog;

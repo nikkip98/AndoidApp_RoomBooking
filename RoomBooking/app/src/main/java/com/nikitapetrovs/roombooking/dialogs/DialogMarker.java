@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.nikitapetrovs.roombooking.R;
-import com.nikitapetrovs.roombooking.Views.AddReservationActivity;
+import com.nikitapetrovs.roombooking.views.AddReservationActivity;
 import com.nikitapetrovs.roombooking.repository.ReservationRepository;
 import com.nikitapetrovs.roombooking.repository.models.Reservation;
 

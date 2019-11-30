@@ -1,4 +1,4 @@
-package com.nikitapetrovs.roombooking.Views.pickers;
+package com.nikitapetrovs.roombooking.views.pickers;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

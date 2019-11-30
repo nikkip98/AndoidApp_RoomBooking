@@ -1,17 +1,12 @@
-package com.nikitapetrovs.roombooking.Views;
+package com.nikitapetrovs.roombooking.views;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -24,10 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikitapetrovs.roombooking.R;
-import com.nikitapetrovs.roombooking.Views.pickers.DatePickerFragment;
+import com.nikitapetrovs.roombooking.views.pickers.DatePickerFragment;
 import com.nikitapetrovs.roombooking.adapters.ReservationAdapter;
 import com.nikitapetrovs.roombooking.repository.BuildingRepository;
-import com.nikitapetrovs.roombooking.repository.DeleteReservationRepository;
 import com.nikitapetrovs.roombooking.repository.ReservationRepository;
 import com.nikitapetrovs.roombooking.repository.RoomRepository;
 import com.nikitapetrovs.roombooking.repository.models.Building;
