@@ -101,7 +101,6 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
     }
 
     @Override

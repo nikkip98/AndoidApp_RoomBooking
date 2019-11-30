@@ -97,7 +97,6 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.setOnMapClickListener(this);
         LatLng loc = new LatLng(59.919472, 10.735318);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));

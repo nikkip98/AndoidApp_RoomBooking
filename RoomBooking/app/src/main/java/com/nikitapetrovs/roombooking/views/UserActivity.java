@@ -81,8 +81,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
-
     }
 
     public void addMarker(Room room) {
