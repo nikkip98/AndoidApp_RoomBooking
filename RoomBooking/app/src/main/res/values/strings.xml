@@ -34,4 +34,5 @@
     <string name="reservation">Reservation</string>
     <string name="room">Room</string>
     <string name="delete_reservation">Delete Reservation</string>
+    <string name="reservations_colon">Reservations:</string>
 </resources>

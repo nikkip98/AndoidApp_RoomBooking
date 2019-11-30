@@ -100,18 +100,24 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
         mMap.clear();
+
         selectedCoordinates = latLng.latitude + ", " + latLng.longitude;
+        mMap.addPolygon(AppUtils.getPolygon(building));
 
         MarkerOptions marker = new MarkerOptions();
         marker.position(latLng);
         marker.title(selectedCoordinates);
         mMap.addMarker(marker);
     }
+
+
 
     @Override
     public void getBuildings(ArrayList<Building> output) {

@@ -67,42 +67,26 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
         floors = findViewById(R.id.textFloors);
 
         backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
         buttonSubmit = findViewById(R.id.submitButton);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkInput();
-            }
-        });
+        buttonSubmit.setOnClickListener(view -> checkInput());
 
         buttonMap = findViewById(R.id.buttonMap);
-        buttonMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mapLayout.setVisibility(View.INVISIBLE);
-                mapLayout.setClickable(false);
-                coordinates.setText(centerCoordinates);
-                buttonSubmit.setVisibility(View.VISIBLE);
-            }
+        buttonMap.setOnClickListener(view -> {
+            mapLayout.setVisibility(View.INVISIBLE);
+            mapLayout.setClickable(false);
+            coordinates.setText(centerCoordinates);
+            buttonSubmit.setVisibility(View.VISIBLE);
         });
 
         chooseLocation = findViewById(R.id.chooseLocation);
-        chooseLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!done) {showTutorialDialog();}
-                mapLayout.setVisibility(View.VISIBLE);
-                mapLayout.setClickable(true);
-                buttonSubmit.setVisibility(View.INVISIBLE);
-                hideKeyboard(activity);
-            }
+        chooseLocation.setOnClickListener(view -> {
+            if(!done) {showTutorialDialog();}
+            mapLayout.setVisibility(View.VISIBLE);
+            mapLayout.setClickable(true);
+            buttonSubmit.setVisibility(View.INVISIBLE);
+            hideKeyboard(activity);
         });
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -112,6 +96,8 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.setOnMapClickListener(this);
         LatLng loc = new LatLng(59.919472, 10.735318);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));

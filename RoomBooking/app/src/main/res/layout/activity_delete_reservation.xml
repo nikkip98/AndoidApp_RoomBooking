@@ -49,6 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
 
 
@@ -140,6 +142,36 @@
         app:layout_constraintStart_toStartOf="@+id/textFloor"
         app:layout_constraintTop_toBottomOf="@+id/textRoom" />
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextReservationDate" />
+
+
+    <TextView
+        android:id="@+id/textReservations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/reservations_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textDate"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textReservations" />
 
     <EditText
         android:id="@+id/editTextReservationDate"
@@ -154,23 +186,25 @@
         android:focusableInTouchMode="false"
         android:hint="@string/date"
         android:inputType="none"
-        android:textSize="24sp"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textDate"
         app:layout_constraintTop_toBottomOf="@+id/textRoom" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextReservationDate"
+        app:layout_constraintTop_toBottomOf="@+id/textReservations"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_reservation" />
 
