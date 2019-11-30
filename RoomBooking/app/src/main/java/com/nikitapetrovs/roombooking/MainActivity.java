@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
-import com.nikitapetrovs.roombooking.Views.AdminActivity;
+import com.nikitapetrovs.roombooking.views.AdminActivity;
 import com.nikitapetrovs.roombooking.dialogs.DialogMarker;
 import com.nikitapetrovs.roombooking.repository.BuildingRepository;
 import com.nikitapetrovs.roombooking.repository.RoomRepository;
