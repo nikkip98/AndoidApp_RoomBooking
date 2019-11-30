@@ -54,31 +54,62 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintHeader"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/textDescription"
+    <TextView
+        android:id="@+id/textViewDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/description_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
+
+    <EditText
+        android:id="@+id/textDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="textPersonName"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
+        app:layout_constraintStart_toEndOf="@+id/textViewDescription"
+        app:layout_constraintTop_toTopOf="@+id/textViewDescription" />
+
+    <TextView
+        android:id="@+id/textViewFloors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/floors_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDescription"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
 
     <EditText
         android:id="@+id/textFloors"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/floors"
         android:inputType="number"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/textDescription"
-        app:layout_constraintStart_toStartOf="@+id/textDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDescription"
         app:layout_constraintTop_toBottomOf="@+id/textDescription" />
 
     <TextView
@@ -96,13 +127,14 @@
         android:id="@+id/textLabelCoords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/coordinates"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/textFloors"
+        app:layout_constraintEnd_toEndOf="@+id/textViewFloors"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textFloors"
-        app:layout_constraintTop_toBottomOf="@+id/textFloors" />
+        app:layout_constraintStart_toStartOf="@+id/textViewFloors"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFloors" />
 
     <ImageButton
         android:id="@+id/chooseLocation"
@@ -113,7 +145,7 @@
         app:layout_constraintEnd_toEndOf="@+id/textFloors"
         app:layout_constraintStart_toEndOf="@+id/textLabelCoords"
         app:layout_constraintTop_toTopOf="@+id/textLabelCoords"
-        app:srcCompat="@drawable/ic_my_location_black_48dp" />
+        app:srcCompat="@drawable/ic_my_location_blue_48dp" />
 
     <Button
         android:id="@+id/submitButton"
@@ -141,8 +173,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <fragment
             android:id="@+id/map"

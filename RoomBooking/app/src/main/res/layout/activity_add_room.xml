@@ -55,10 +55,26 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
 
 
-    <Spinner
-        android:id="@+id/spinnerBuilding"
+    <TextView
+        android:id="@+id/textViewBuilding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/buildingLabel"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
+
+    <Spinner
+        android:id="@+id/spinnerBuilding"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/textViewBuilding"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,35 +82,11 @@
         app:layout_constraintStart_toEndOf="@+id/textViewBuilding"
         app:layout_constraintTop_toTopOf="@+id/textViewBuilding" />
 
-    <Spinner
-        android:id="@+id/spinnerFloor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/textFloor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toEndOf="@+id/textViewBuilding"
-        app:layout_constraintTop_toTopOf="@+id/textFloor" />
-
-    <TextView
-        android:id="@+id/textViewBuilding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="@string/buildingLabel"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
-
     <TextView
         android:id="@+id/textFloor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/floor_colon"
         android:textSize="24sp"
@@ -104,31 +96,57 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewBuilding"
         tools:text="Floor:" />
 
-    <EditText
-        android:id="@+id/textDescription"
+    <Spinner
+        android:id="@+id/spinnerFloor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textFloor"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerBuilding"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/spinnerBuilding"
+        app:layout_constraintTop_toTopOf="@+id/textFloor" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/description_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/textFloor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textFloor"
+        app:layout_constraintTop_toBottomOf="@+id/textFloor" />
+
+    <EditText
+        android:id="@+id/textDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="textPersonName"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFloor" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDescription"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerFloor"
+        app:layout_constraintStart_toEndOf="@+id/textViewDescription"
+        app:layout_constraintTop_toTopOf="@+id/textViewDescription" />
 
 
     <TextView
         android:id="@+id/textLabelCoords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/coordinates"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/textDescription"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDescription"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="@+id/textDescription"
-        app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+        app:layout_constraintStart_toStartOf="@+id/textViewDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <TextView
         android:id="@+id/textCoordinates"
@@ -148,10 +166,9 @@
         android:contentDescription="@string/marker_image"
         app:layout_constraintBottom_toBottomOf="@+id/textLabelCoords"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@+id/textLabelCoords"
         app:layout_constraintTop_toTopOf="@+id/textLabelCoords"
-        app:srcCompat="@drawable/ic_my_location_black_48dp" />
+        app:srcCompat="@drawable/ic_my_location_blue_48dp" />
 
 
     <Button
@@ -179,8 +196,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <fragment
             android:id="@+id/map"

@@ -57,12 +57,13 @@
 
     <Spinner
         android:id="@+id/spinnerBuilding"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/textViewBuilding"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@+id/textViewBuilding"
         app:layout_constraintTop_toTopOf="@+id/textViewBuilding" />
 
@@ -70,12 +71,13 @@
         android:id="@+id/textViewBuilding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/buildingLabel"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
 

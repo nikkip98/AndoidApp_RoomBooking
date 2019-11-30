@@ -54,11 +54,38 @@
         android:background="@android:color/black"
         app:layout_constraintTop_toBottomOf="@+id/constraintHeader" />
 
-    <EditText
-        android:id="@+id/editTextDate"
+    <TextView
+        android:id="@+id/roomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintHeader"
+        tools:text="Room" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/date_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomName" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:clickable="false"
         android:ems="10"
         android:focusable="false"
@@ -66,16 +93,30 @@
         android:hint="@string/date"
         android:inputType="none"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/roomName"
-        app:layout_constraintStart_toStartOf="@+id/roomName"
-        app:layout_constraintTop_toBottomOf="@+id/roomName" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTimeFrom"
+        app:layout_constraintStart_toStartOf="@+id/editTextTimeFrom"
+        app:layout_constraintTop_toTopOf="@+id/textViewDate" />
 
+    <TextView
+        android:id="@+id/textViewTimeFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/time_from_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewDate"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
 
     <EditText
         android:id="@+id/editTextTimeFrom"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:clickable="false"
         android:ems="10"
         android:focusable="false"
@@ -83,15 +124,28 @@
         android:hint="@string/time_from"
         android:inputType="none"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextDate"
-        app:layout_constraintStart_toStartOf="@+id/editTextDate"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTimeFrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewTimeFrom"
+        app:layout_constraintTop_toTopOf="@+id/textViewTimeFrom" />
+
+    <TextView
+        android:id="@+id/textViewTimeTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/time_to_colon"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTimeFrom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewTimeFrom"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTimeFrom" />
 
     <EditText
         android:id="@+id/editTextTImeTo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:clickable="false"
         android:ems="10"
         android:focusable="false"
@@ -99,9 +153,10 @@
         android:hint="@string/time_to"
         android:inputType="none"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTimeTo"
         app:layout_constraintEnd_toEndOf="@+id/editTextTimeFrom"
         app:layout_constraintStart_toStartOf="@+id/editTextTimeFrom"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTimeFrom" />
+        app:layout_constraintTop_toTopOf="@+id/textViewTimeTo" />
 
     <Button
         android:id="@+id/submittButton"
@@ -119,18 +174,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTImeTo" />
-
-    <TextView
-        android:id="@+id/roomName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintHeader"
-        tools:text="Room" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
