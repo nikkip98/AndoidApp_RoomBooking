@@ -13,7 +13,7 @@ import com.nikitapetrovs.roombooking.R;
 
 public class AdminActivity  extends AppCompatActivity {
 
-    private androidx.constraintlayout.widget.ConstraintLayout layoutBuilding, layoutRoom, layoutDeleteBuilding, layoutDeleteRoom;
+    private androidx.constraintlayout.widget.ConstraintLayout layoutBuilding, layoutRoom, layoutDeleteBuilding, layoutDeleteRoom, layoutDeleteReservation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +49,11 @@ public class AdminActivity  extends AppCompatActivity {
         layoutDeleteRoom = findViewById(R.id.layoutDeleteRoom);
         layoutDeleteRoom.setOnClickListener(view -> {
             Intent i = new Intent(context, DeleteRoomActivity.class);
+            startActivity(i);
+        });
+        layoutDeleteReservation = findViewById(R.id.layoutDeleteReservation);
+        layoutDeleteReservation.setOnClickListener(view -> {
+            Intent i = new Intent(context, DeleteReservationActivity.class);
             startActivity(i);
         });
     }

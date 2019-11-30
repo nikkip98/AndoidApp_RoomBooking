@@ -65,7 +65,7 @@ public class AddReservationActivity extends AppCompatActivity implements TimePic
         backButton.setOnClickListener(view -> finish());
         date.setInputType(InputType.TYPE_NULL);
         date.setOnClickListener(view -> {
-            DialogFragment fragment = new DatePickerFragment();
+            DialogFragment fragment = new DatePickerFragment(true);
             fragment.show(getSupportFragmentManager(), "datePicker");
         });
 
@@ -91,7 +91,7 @@ public class AddReservationActivity extends AppCompatActivity implements TimePic
             room.setText(selectedRoom);
         }
 
-        new ReservationRepository(this).execute("http://student.cs.hioa.no/~s325918/getReservations.php/", id);
+        new ReservationRepository(this).execute("http://student.cs.hioa.no/~s325918/getReservations.php/", id, null);
     }
 
     public void validateSubmit() {
@@ -123,29 +123,25 @@ public class AddReservationActivity extends AppCompatActivity implements TimePic
 
         final String newUrl = toUrl.replaceAll(" ", "%20");
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 
@@ -192,12 +188,7 @@ public class AddReservationActivity extends AppCompatActivity implements TimePic
                 .setMessage("Reservation made for Room: " + selectedRoom
                         + "\nDate: " + selectedDate
                         + "\nFrom: " + selectedTimeFrom + " " + "To: " + selectedTimeTo)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                }).create().show();
+                .setPositiveButton("ok", (dialogInterface, i) -> finish()).create().show();
     }
 
     @Override

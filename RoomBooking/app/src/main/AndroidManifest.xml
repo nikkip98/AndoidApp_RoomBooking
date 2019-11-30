@@ -24,15 +24,16 @@
         </activity>
 
         <activity android:name=".Views.AddReservationActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Views.AdminActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Views.AddBuildingActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Views.AddRoomActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Views.DeleteBuildingActivity" />
         <activity android:name=".Views.DeleteRoomActivity" />
+        <activity android:name=".Views.DeleteReservationActivity"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

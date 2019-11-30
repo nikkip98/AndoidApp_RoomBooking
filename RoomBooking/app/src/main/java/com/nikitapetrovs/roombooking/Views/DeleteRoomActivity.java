@@ -231,29 +231,25 @@ public class DeleteRoomActivity extends AppCompatActivity implements BuildingRep
 
         System.out.println(newUrl);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-                    deleteRoom();
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+                deleteRoom();
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 
@@ -265,29 +261,25 @@ public class DeleteRoomActivity extends AppCompatActivity implements BuildingRep
         final String newUrl = toUrl.replaceAll(" ", "%20");
 
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-                    updateRoomSpinner();
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+                updateRoomSpinner();
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 

@@ -37,7 +37,7 @@ public class DialogMarker extends Dialog implements ReservationRepository.AsyncR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_marker);
 
-        new ReservationRepository(this).execute("http://student.cs.hioa.no/~s325918/getReservations.php", roomID);
+        new ReservationRepository(this).execute("http://student.cs.hioa.no/~s325918/getReservations.php", roomID, null);
 
         desc = findViewById(R.id.labelDesc);
         list = findViewById(R.id.textList);

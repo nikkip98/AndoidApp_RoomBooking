@@ -10,7 +10,7 @@
         android:id="@+id/constraintHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,13 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:background="#00FFFFFF"
             android:contentDescription="@string/black_arrow_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_keyboard_arrow_left_black_48dp" />
@@ -38,7 +35,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:text="@string/delete_reservation"
             android:textColor="#ff9d26"
-            android:textSize="36sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -130,20 +127,49 @@
         app:layout_constraintStart_toStartOf="@+id/textFloor"
         app:layout_constraintTop_toBottomOf="@+id/textFloor" />
 
-
-    <Button
-        android:id="@+id/submitButton"
-        style="@style/Widget.AppCompat.Button.Colored"
+    <TextView
+        android:id="@+id/textDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/button_shape"
-        android:text="@string/delete_reservation"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/date_colon"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/textFloor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textFloor"
+        app:layout_constraintTop_toBottomOf="@+id/textRoom" />
+
+
+    <EditText
+        android:id="@+id/editTextReservationDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="@string/date"
+        android:inputType="none"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/textDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textDate"
+        app:layout_constraintTop_toBottomOf="@+id/textRoom" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textRoom" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextReservationDate"
+        tools:listitem="@layout/item_reservation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,11 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private onDateSetListener mListener;
+    private boolean adding;
+
+    public DatePickerFragment(boolean adding) {
+        this.adding = adding;
+    }
 
     /**
      * Listener
@@ -36,7 +41,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        if(adding) {
+            dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        }
 
         return dialog;
     }

@@ -3,22 +3,32 @@ package com.nikitapetrovs.roombooking.Views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikitapetrovs.roombooking.R;
+import com.nikitapetrovs.roombooking.Views.pickers.DatePickerFragment;
+import com.nikitapetrovs.roombooking.adapters.ReservationAdapter;
 import com.nikitapetrovs.roombooking.repository.BuildingRepository;
 import com.nikitapetrovs.roombooking.repository.DeleteReservationRepository;
+import com.nikitapetrovs.roombooking.repository.ReservationRepository;
 import com.nikitapetrovs.roombooking.repository.RoomRepository;
 import com.nikitapetrovs.roombooking.repository.models.Building;
 import com.nikitapetrovs.roombooking.repository.models.Reservation;
@@ -27,12 +37,14 @@ import com.nikitapetrovs.roombooking.repository.models.Room;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class DeleteReservationActivity extends AppCompatActivity implements BuildingRepository.AsyncResponse, RoomRepository.AsyncResponse{
+public class DeleteReservationActivity extends AppCompatActivity implements BuildingRepository.AsyncResponse, RoomRepository.AsyncResponse, ReservationAdapter.OnButtonClickedListener, ReservationRepository.AsyncResponse, DatePickerFragment.onDateSetListener {
 
     private Spinner spinnerBuilding, spinnerFloor, spinnerRoom;
-    private Button submitButton;
+    private ReservationAdapter adapter;
+    private EditText date;
 
     private Building building;
     private Room room;
@@ -40,16 +52,20 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
     private ArrayList<Room> rooms;
     private String selectedFloor;
     private String selectedRoom;
-
-    private boolean deleted;
-
+    private String selectedDate;
+    private Reservation reservation;
+    private int deletedItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_room);
+        setContentView(R.layout.activity_delete_reservation);
 
-        final Context context = this;
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        selectedDate = day + "/" + (month + 1) + "/" + year;
 
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(view -> finish());
@@ -57,22 +73,52 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
         spinnerBuilding = findViewById(R.id.spinnerBuilding);
         spinnerFloor = findViewById(R.id.spinnerFloor);
         spinnerRoom = findViewById(R.id.spinnerRoom);
-        submitButton = findViewById(R.id.submitButton);
+
+        date = findViewById(R.id.editTextReservationDate);
+        date.setText(selectedDate);
+        date.setInputType(InputType.TYPE_NULL);
+        date.setOnClickListener(view -> {
+            DialogFragment fragment = new DatePickerFragment(false);
+            fragment.show(getSupportFragmentManager(), "datePicker");
+        });
 
         new RoomRepository(this).execute("http://student.cs.hioa.no/~s325918/getRooms.php");
         new BuildingRepository(this).execute("http://student.cs.hioa.no/~s325918/getBuildings.php");
 
-        submitButton.setOnClickListener(view -> new AlertDialog.Builder(context)
-                .setTitle("Confirm Action")
-                .setMessage("Do you want to delete selected Room?\nAll reservations will be deleted with it!")
-                .setPositiveButton("ok", (dialogInterface, i) -> delete())
-                .setNegativeButton("cancel", (dialogInterface, i) -> dialogInterface.dismiss()).create().show());
+        adapter = new ReservationAdapter(this, this);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void getBuildings(ArrayList<Building> output) {
         buildings = output;
         fillBuildingSpinner();
+    }
+
+    @Override
+    public void getRooms(ArrayList<Room> output) {
+        rooms = output;
+    }
+
+    @Override
+    public void getReservations(String output) {
+
+    }
+
+    @Override
+    public void getReservationsArray(ArrayList<Reservation> output) {
+        adapter.submitList(output);
+        adapter.notifyItemChanged(deletedItem);
+    }
+
+    @Override
+    public void receiveDate(String string) {
+        selectedDate = string;
+        date.setText(string);
+        updateReservationList();
     }
 
     public void fillBuildingSpinner() {
@@ -96,15 +142,6 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
 
             }
         });
-    }
-
-    public Building findBuilding(String input) {
-        for (Building building : buildings) {
-            if (building.getDescription().equals(input)) {
-                return building;
-            }
-        }
-        return null;
     }
 
     public void fillFloorSpinner() {
@@ -136,15 +173,6 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
         });
     }
 
-    @Override
-    public void getRooms(ArrayList<Room> output) {
-        rooms = output;
-        if(deleted) {
-            fillRoomSpinner();
-            deleted = false;
-        }
-    }
-
     public void fillRoomSpinner() {
         int floor = Integer.parseInt(selectedFloor);
         Building building = findBuilding(spinnerBuilding.getSelectedItem().toString());
@@ -166,6 +194,8 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
                 selected.setTextSize(20);
                 selected.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 selectedRoom = adapterView.getItemAtPosition(i).toString();
+                findRoom();
+                updateReservationList();
             }
 
             @Override
@@ -175,6 +205,14 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
         });
     }
 
+    public Building findBuilding(String input) {
+        for (Building building : buildings) {
+            if (building.getDescription().equals(input)) {
+                return building;
+            }
+        }
+        return null;
+    }
 
     public void findRoom() {
         for (Room room : rooms) {
@@ -184,96 +222,53 @@ public class DeleteReservationActivity extends AppCompatActivity implements Buil
         }
     }
 
-    /**
-     * Starts deleting process
-     */
-    private void delete() {
-        findRoom();
-        deleteReservations();
-    }
-
-    private void deleteReservations() {
-        DeleteReservationRepository rep = new DeleteReservationRepository(room.getId());
-        ArrayList<Reservation>  reservations = rep.getReservations();
-        String toUrl = "http://student.cs.hioa.no/~s325918/deleteReservation.php/";
-        System.out.println(reservations.size());
-        for (int x = 0; x < reservations.size(); x++) {
-            if (x == 0) {
-                toUrl = toUrl + "?id" + "[" + x + "]" + "=" + +reservations.get(x).getId();
-            } else {
-                toUrl = toUrl + "&id" + "[" + x + "]" + "=" + reservations.get(x).getId();
-            }
-
-        }
+    private void deleteReservation() {
+        String toUrl = "http://student.cs.hioa.no/~s325918/deleteReservation.php/?id[0]=" + reservation.getId();
 
         final String newUrl = toUrl.replaceAll(" ", "%20");
 
-        System.out.println(newUrl);
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
-
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-                    deleteRoom();
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+                updateReservationList();
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 
-    private void deleteRoom() {
-
-        final String toUrl = "http://student.cs.hioa.no/~s325918/deleteRoom.php/" +
-                "?id[0]=" + room.getId();
-
-        final String newUrl = toUrl.replaceAll(" ", "%20");
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
-
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-                    updateRoomSpinner();
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
-                }
-            }
-
-        }).start();
+    public void updateReservationList() {
+        String id = "" + room.getId();
+        new ReservationRepository(this).execute("http://student.cs.hioa.no/~s325918/getReservations.php/", id, selectedDate);
     }
 
-    private void updateRoomSpinner() {
-        new RoomRepository(this).execute("http://student.cs.hioa.no/~s325918/getRooms.php");
-        deleted = true;
+    @Override
+    public void onButtonClicked(int id) {
+        reservation = adapter.getReservationAt(id);
+        deletedItem = id;
+
+        new AlertDialog.Builder(this)
+                .setTitle("Choose Action")
+                .setMessage("Do you want to delete reservation?")
+                .setPositiveButton("ok", (dialogInterface, i) -> {
+                    deleteReservation();
+
+                })
+                .setNegativeButton("cancel", (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
     }
+
 
 
 }

@@ -37,8 +37,19 @@ public class ReservationRepository extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... urls) {
         StringBuilder output = new StringBuilder(); //output
         StringBuilder requestResponse = new StringBuilder(); //input
+        String selectedDate;
 
         int currRoomID = Integer.parseInt(urls[1]);
+
+        if(urls[2] != null) {
+            selectedDate = urls[2];
+        } else {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            selectedDate = day + "/" + (month + 1) + "/" + year;
+        }
 
         String readerLine;
 
@@ -76,19 +87,13 @@ public class ReservationRepository extends AsyncTask<String, Void, String> {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonobject = jsonArray.getJSONObject(i);
 
-                    Calendar cal = Calendar.getInstance();
-                    int year = cal.get(Calendar.YEAR);
-                    int month = cal.get(Calendar.MONTH);
-                    int day = cal.get(Calendar.DAY_OF_MONTH);
-                    String todaysDate = day + "/" + (month + 1) + "/" + year;
-
                     int id = jsonobject.getInt("id");
                     String reservationDate = jsonobject.getString("date");
                     String timeFrom = jsonobject.getString("timeFrom");
                     String timeTo = jsonobject.getString("timeTo");
                     int roomID = jsonobject.getInt("roomID");
 
-                    if (currRoomID == roomID && todaysDate.equals(reservationDate)) {
+                    if (currRoomID == roomID && selectedDate.equals(reservationDate)) {
                         reservations.add(new Reservation(id, reservationDate, timeFrom, timeTo, roomID));
                     }
 

@@ -243,7 +243,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutReservation"
+        android:id="@+id/layoutDeleteReservation"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
