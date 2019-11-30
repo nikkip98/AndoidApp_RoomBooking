@@ -2,7 +2,6 @@ package com.nikitapetrovs.roombooking.Views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,12 +44,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Buildin
         final Context context = this;
 
         ImageButton backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
         spinnerBuilding = findViewById(R.id.spinnerBuilding);
         submitButton = findViewById(R.id.submitButton);
@@ -58,27 +52,12 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Buildin
         new BuildingRepository(this).execute("http://student.cs.hioa.no/~s325918/getBuildings.php");
         new RoomRepository(this).execute("http://student.cs.hioa.no/~s325918/getRooms.php");
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Confirm Action")
-                        .setIcon(R.drawable.ic_warning_red_24dp)
-                        .setMessage("Do you want to delete selected building?\nAll rooms and reservations will be deleted with it!")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                delete();
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        }).create().show();
-            }
-        });
+        submitButton.setOnClickListener(view -> new AlertDialog.Builder(context)
+                .setTitle("Confirm Action")
+                .setIcon(R.drawable.ic_warning_red_24dp)
+                .setMessage("Do you want to delete selected building?\nAll rooms and reservations will be deleted with it!")
+                .setPositiveButton("ok", (dialogInterface, i) -> delete())
+                .setNegativeButton("cancel", (dialogInterface, i) -> dialogInterface.dismiss()).create().show());
     }
 
     @Override
@@ -123,13 +102,10 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Buildin
 
     private void delete() {
         deleteRoomReservations();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                deleteRooms();
-                deleteBuilding();
-                updateBuildingSpinner();
-            }
+        new Thread(() -> {
+            deleteRooms();
+            deleteBuilding();
+            updateBuildingSpinner();
         }).start();
 
 
@@ -232,29 +208,25 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Buildin
 
         final String newUrl = toUrl.replaceAll(" ", "%20");
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 

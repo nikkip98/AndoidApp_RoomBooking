@@ -31,4 +31,7 @@
     <string name="delete_room">Delete Room</string>
     <string name="trash_bin">Trash bin</string>
     <string name="room_colon">Room:</string>
+    <string name="reservation">Reservation</string>
+    <string name="room">Room</string>
+    <string name="delete_reservation">Delete Reservation</string>
 </resources>

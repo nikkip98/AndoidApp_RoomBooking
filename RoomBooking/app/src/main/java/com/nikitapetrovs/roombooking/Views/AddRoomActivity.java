@@ -69,43 +69,27 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
         new BuildingRepository(this).execute("http://student.cs.hioa.no/~s325918/getBuildings.php");
 
         backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
         mapLayout = findViewById(R.id.mapLayout);
 
         buttonSubmit = findViewById(R.id.submitButton);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkInput();
-            }
-        });
+        buttonSubmit.setOnClickListener(view -> checkInput());
 
         chooseLocation = findViewById(R.id.chooseLocation);
-        chooseLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mapLayout.setVisibility(View.VISIBLE);
-                mapLayout.setClickable(true);
-                buttonSubmit.setVisibility(View.INVISIBLE);
-                hideKeyboard(activity);
-            }
+        chooseLocation.setOnClickListener(view -> {
+            mapLayout.setVisibility(View.VISIBLE);
+            mapLayout.setClickable(true);
+            buttonSubmit.setVisibility(View.INVISIBLE);
+            hideKeyboard(activity);
         });
 
         buttonMap = findViewById(R.id.buttonMap);
-        buttonMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mapLayout.setVisibility(View.INVISIBLE);
-                mapLayout.setClickable(false);
-                coordinates.setText(selectedCoordinates);
-                buttonSubmit.setVisibility(View.VISIBLE);
-            }
+        buttonMap.setOnClickListener(view -> {
+            mapLayout.setVisibility(View.INVISIBLE);
+            mapLayout.setClickable(false);
+            coordinates.setText(selectedCoordinates);
+            buttonSubmit.setVisibility(View.VISIBLE);
         });
 
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -221,12 +205,7 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
         new AlertDialog.Builder(this)
                 .setTitle("Confirmation")
                 .setMessage("Room: " + description.getText() + "\nAt building: " + spinnerBuilding.getSelectedItem().toString() + ", has been created!")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
+                .setPositiveButton("ok", (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
     }
 
     public void submitRoom() {

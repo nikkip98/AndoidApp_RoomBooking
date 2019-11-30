@@ -62,46 +62,27 @@ public class AddReservationActivity extends AppCompatActivity implements TimePic
         timeTo = findViewById(R.id.editTextTImeTo);
 
         backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
         date.setInputType(InputType.TYPE_NULL);
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment fragment = new DatePickerFragment();
-                fragment.show(getSupportFragmentManager(), "datePicker");
-            }
+        date.setOnClickListener(view -> {
+            DialogFragment fragment = new DatePickerFragment();
+            fragment.show(getSupportFragmentManager(), "datePicker");
         });
 
         timeFrom.setInputType(InputType.TYPE_NULL);
-        timeFrom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment fragment = new TimePickerFragment();
-                fragment.show(getSupportFragmentManager(), "from");
-            }
+        timeFrom.setOnClickListener(view -> {
+            DialogFragment fragment = new TimePickerFragment();
+            fragment.show(getSupportFragmentManager(), "from");
         });
 
         timeTo.setInputType(InputType.TYPE_NULL);
-        timeTo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment fragment = new TimePickerFragment();
-                fragment.show(getSupportFragmentManager(), "to");
-            }
+        timeTo.setOnClickListener(view -> {
+            DialogFragment fragment = new TimePickerFragment();
+            fragment.show(getSupportFragmentManager(), "to");
         });
 
         submit = findViewById(R.id.submittButton);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateSubmit();
-            }
-        });
+        submit.setOnClickListener(view -> validateSubmit());
 
         Intent intent = getIntent();
         if (intent.hasExtra("id")) {
