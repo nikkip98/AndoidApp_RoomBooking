@@ -3,6 +3,7 @@ package com.nikitapetrovs.roombooking.repository;
 import android.os.AsyncTask;
 
 import com.nikitapetrovs.roombooking.repository.models.Reservation;
+import com.nikitapetrovs.roombooking.util.AppUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,17 +89,11 @@ public class ReservationRepository extends AsyncTask<String, Void, String> {
                     int roomID = jsonobject.getInt("roomID");
 
                     if (currRoomID == roomID && todaysDate.equals(reservationDate)) {
-
                         reservations.add(new Reservation(id, reservationDate, timeFrom, timeTo, roomID));
-
-                        output.append("From: ").append(timeFrom)
-                                .append(" ")
-                                .append("To: ").append(timeTo)
-                                .append("\n");
                     }
 
                 }
-                reservationsString = output.toString();
+                reservationsString = AppUtils.getReservationString(reservations);
                 return output.toString();
 
             } catch (JSONException e) {
