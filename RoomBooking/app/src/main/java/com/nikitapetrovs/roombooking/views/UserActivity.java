@@ -1,4 +1,4 @@
-package com.nikitapetrovs.roombooking;
+package com.nikitapetrovs.roombooking.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.nikitapetrovs.roombooking.R;
 import com.nikitapetrovs.roombooking.views.AdminActivity;
 import com.nikitapetrovs.roombooking.dialogs.DialogMarker;
 import com.nikitapetrovs.roombooking.repository.BuildingRepository;
@@ -35,7 +36,7 @@ import com.nikitapetrovs.roombooking.util.AppUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, RoomRepository.AsyncResponse, BuildingRepository.AsyncResponse {
+public class UserActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, RoomRepository.AsyncResponse, BuildingRepository.AsyncResponse {
 
     private GoogleMap mMap;
     private Spinner spinnerBuilding;

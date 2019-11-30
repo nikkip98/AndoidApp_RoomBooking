@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.nikitapetrovs.roombooking.MainActivity;
 import com.nikitapetrovs.roombooking.R;
 
 public class AdminActivity  extends AppCompatActivity {
@@ -24,7 +23,7 @@ public class AdminActivity  extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(view -> {
-            Intent i = new Intent(context, MainActivity.class);
+            Intent i = new Intent(context, UserActivity.class);
             startActivity(i);
         });
 
@@ -61,7 +60,7 @@ public class AdminActivity  extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, UserActivity.class);
         startActivity(i);
     }
 }
