@@ -41,10 +41,19 @@ public class AppUtils {
             String[] fromTime1 = r1.getTimeFrom().split(":");
             String[] formTime2 = r2.getTimeFrom().split(":");
 
-            int time1 = Integer.parseInt(fromTime1[0]);
-            int time2 = Integer.parseInt(formTime2[0]);
+            int time10 = Integer.parseInt(fromTime1[0]);
+            int time20 = Integer.parseInt(formTime2[0]);
 
-            return Integer.compare(time1, time2);
+            int time11 = Integer.parseInt(fromTime1[1]);
+            int time21 = Integer.parseInt(formTime2[1]);
+
+            if(time10 > time20) {
+                return 1;
+            } else if(time10 < time20) {
+                return -1;
+            } else {
+                return Integer.compare(time11, time21);
+            }
         });
 
         return reservations;
