@@ -75,9 +75,7 @@ public class ReservationAdapter extends ListAdapter<Reservation, ReservationAdap
             this.onButtonClickedListener = onButtonClickedListener;
 
             ImageButton button = itemView.findViewById(R.id.imageButton);
-            button.setOnClickListener(view -> {
-              onClick(view);
-            });
+            button.setOnClickListener(this);
 
         }
 

@@ -25,7 +25,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 import com.nikitapetrovs.roombooking.R;
-import com.nikitapetrovs.roombooking.views.AdminActivity;
 import com.nikitapetrovs.roombooking.dialogs.DialogMarker;
 import com.nikitapetrovs.roombooking.repository.BuildingRepository;
 import com.nikitapetrovs.roombooking.repository.RoomRepository;
@@ -44,8 +43,6 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ImageButton adminButton;
     private TextView adminText;
 
-
-
     private ArrayList<Room> rooms;
     private ArrayList<Building> buildings;
 
@@ -60,13 +57,10 @@ public class UserActivity extends AppCompatActivity implements OnMapReadyCallbac
         adminButton = findViewById(R.id.adminButton);
         adminText = findViewById(R.id.textAdmin);
 
-        View.OnClickListener adminListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //Listener for number buttons
-                Intent i = new Intent(context, AdminActivity.class);
-                startActivity(i);
-                finish();
-            }
+        View.OnClickListener adminListener = view -> { //Listener for number buttons
+            Intent i = new Intent(context, AdminActivity.class);
+            startActivity(i);
+            finish();
         };
 
         adminButton.setOnClickListener(adminListener);
