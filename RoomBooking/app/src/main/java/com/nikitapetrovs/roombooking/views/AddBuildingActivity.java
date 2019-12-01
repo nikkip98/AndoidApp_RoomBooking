@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,9 @@ import com.nikitapetrovs.roombooking.util.AppUtils;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
+
+import static java.util.Locale.getDefault;
 
 public class AddBuildingActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener  {
 
@@ -40,6 +45,7 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
     private Button buttonMap;
     private Button buttonSubmit;
     private TextView coordinates;
+    private TextView selectedAdress;
     private EditText description;
     private EditText floors;
 
@@ -65,6 +71,7 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
         coordinates = findViewById(R.id.textCoordinates);
         description = findViewById(R.id.textDescription);
         floors = findViewById(R.id.textFloors);
+        selectedAdress = findViewById(R.id.textViewSelectedAddress);
 
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(view -> finish());
@@ -124,6 +131,15 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
         if(!centerIsSet) {
             this.centerCoordinates = AppUtils.coordinatesToString(latLng);
+            Geocoder geo = new Geocoder(this);
+            try {
+                Address address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+                selectedAdress.setText(address.getAddressLine(0));
+            } catch (Exception e) {
+                return;
+            }
+
+
             centerIsSet = true;
         }
 

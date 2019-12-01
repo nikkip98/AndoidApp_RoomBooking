@@ -2,6 +2,8 @@ package com.nikitapetrovs.roombooking.views;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +43,7 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
     private ImageButton backButton;
     private ImageButton chooseLocation;
     private Button buttonMap;
+    private TextView selectedAdress;
     private Button buttonSubmit;
     private Spinner spinnerBuilding, spinnerFloor;
     private androidx.constraintlayout.widget.ConstraintLayout mapLayout;
@@ -61,6 +64,7 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
 
         description = findViewById(R.id.textDescription);
         coordinates = findViewById(R.id.textCoordinates);
+        selectedAdress = findViewById(R.id.textViewSelectedAddress);
 
         spinnerBuilding = findViewById(R.id.spinnerBuilding);
         spinnerFloor = findViewById(R.id.spinnerFloor);
@@ -107,7 +111,15 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
     public void onMapClick(LatLng latLng) {
         mMap.clear();
 
-        selectedCoordinates = latLng.latitude + ", " + latLng.longitude;
+        Geocoder geo = new Geocoder(this);
+        try {
+            Address address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+            selectedAdress.setText(address.getAddressLine(0));
+        } catch (Exception e) {
+            return;
+        }
+
+        selectedCoordinates = AppUtils.coordinatesToString(latLng);
         mMap.addPolygon(AppUtils.getPolygon(building));
 
         MarkerOptions marker = new MarkerOptions();

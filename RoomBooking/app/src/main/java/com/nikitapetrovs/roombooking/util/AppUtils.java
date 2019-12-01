@@ -8,6 +8,7 @@ import com.nikitapetrovs.roombooking.R;
 import com.nikitapetrovs.roombooking.repository.models.Building;
 import com.nikitapetrovs.roombooking.repository.models.Reservation;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -27,12 +28,15 @@ public class AppUtils {
 
 
     public static LatLng stringToCoordinates(String input) {
+
         String[] cords = input.split(", ");
         return new LatLng(Double.parseDouble(cords[0]), Double.parseDouble(cords[1]));
     }
 
     public static String coordinatesToString(LatLng input) {
-       return  input.latitude + ", " + input.longitude;
+        DecimalFormat df = new DecimalFormat("#.######");
+
+        return df.format(input.latitude) + ", " + df.format(input.longitude);
     }
 
     public static ArrayList<Reservation> sortReservations(ArrayList<Reservation> reservations) {
@@ -47,9 +51,9 @@ public class AppUtils {
             int time11 = Integer.parseInt(fromTime1[1]);
             int time21 = Integer.parseInt(formTime2[1]);
 
-            if(time10 > time20) {
+            if (time10 > time20) {
                 return 1;
-            } else if(time10 < time20) {
+            } else if (time10 < time20) {
                 return -1;
             } else {
                 return Integer.compare(time11, time21);
@@ -63,7 +67,7 @@ public class AppUtils {
         ArrayList<Reservation> reservations = sortReservations(input);
         StringBuilder output = new StringBuilder();
 
-        for (Reservation reservation: reservations) {
+        for (Reservation reservation : reservations) {
             output.append("From: ").append(reservation.timeFrom)
                     .append(" ")
                     .append("To: ").append(reservation.timeTo)

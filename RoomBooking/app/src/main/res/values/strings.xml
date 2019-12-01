@@ -39,4 +39,5 @@
     <string name="floors_colon">Floors:</string>
     <string name="time_to_colon">Time to:</string>
     <string name="time_from_colon">Time from:</string>
+    <string name="address">Address:</string>
 </resources>
