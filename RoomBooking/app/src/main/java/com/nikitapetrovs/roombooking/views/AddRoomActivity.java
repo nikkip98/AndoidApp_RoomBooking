@@ -215,6 +215,7 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
 
         description.setText("");
         coordinates.setText("");
+        selectedAdress.setText("");
     }
 
     public void showConfirmationDialog() {

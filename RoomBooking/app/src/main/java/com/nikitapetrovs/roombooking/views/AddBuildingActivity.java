@@ -32,9 +32,6 @@ import com.nikitapetrovs.roombooking.util.AppUtils;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import static java.util.Locale.getDefault;
 
 public class AddBuildingActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener  {
 
@@ -85,7 +82,6 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
         buttonMap.setOnClickListener(view -> {
             mapLayout.setVisibility(View.INVISIBLE);
             mapLayout.setClickable(false);
-            coordinates.setText(centerCoordinates);
             buttonSubmit.setVisibility(View.VISIBLE);
         });
 
@@ -113,8 +109,6 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapClick(LatLng latLng) {
-        //mMap.clear();
-
         if(done) {return;}
 
         if(centerIsSet && counter < 4) {
@@ -133,6 +127,7 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
         if(!centerIsSet) {
             this.centerCoordinates = AppUtils.coordinatesToString(latLng);
+            coordinates.setText(centerCoordinates);
             Geocoder geo = new Geocoder(this);
             try {
                 Address address = geo.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
@@ -140,7 +135,6 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
             } catch (Exception e) {
                 return;
             }
-
 
             centerIsSet = true;
         }
@@ -167,6 +161,7 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
             Toast.makeText(this, "Select corners", Toast.LENGTH_SHORT).show();
         }
 
+        if(!done) {return;}
 
         showConfirmationDialog();
 
@@ -175,18 +170,14 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
         description.setText("");
         floors.setText("");
         coordinates.setText("");
+        selectedAdress.setText("");
     }
 
     public void showConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Confirmation")
                 .setMessage("Building: " + description.getText() + ", has been created!")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
+                .setPositiveButton("ok", (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
     }
 
     public void showTutorialDialog() {
@@ -194,12 +185,7 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
                 .setTitle("You are about to create a building")
                 .setIcon(R.drawable.ic_warning_orange_24dp)
                 .setMessage("1. Choose center of the building\n2. Choose 4 corners of the building")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }).create().show();
+                .setPositiveButton("ok", (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
     }
 
     public void submitBuilding() {
@@ -250,9 +236,11 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
     public void reset() {
         mMap.clear();
+        coordinates.setText("");
+        selectedAdress.setText("");
         done = false;
         centerIsSet = false;
-        corners = new ArrayList<>();
+        corners.clear();
         counter = 0;
     }
 }

@@ -52,12 +52,7 @@ public class DeleteRoomActivity extends AppCompatActivity implements BuildingRep
         final Context context = this;
 
         ImageButton backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
         spinnerBuilding = findViewById(R.id.spinnerBuilding);
         spinnerFloor = findViewById(R.id.spinnerFloor);
@@ -67,26 +62,12 @@ public class DeleteRoomActivity extends AppCompatActivity implements BuildingRep
         new RoomRepository(this).execute("http://student.cs.hioa.no/~s325918/getRooms.php");
         new BuildingRepository(this).execute("http://student.cs.hioa.no/~s325918/getBuildings.php");
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Confirm Action")
-                        .setMessage("Do you want to delete selected Room?\nAll reservations will be deleted with it!")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                delete();
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        }).create().show();
-            }
-        });
+        submitButton.setOnClickListener(view -> new AlertDialog.Builder(context)
+                .setTitle("Confirm Action")
+                .setIcon(R.drawable.ic_warning_red_24dp)
+                .setMessage("Do you want to delete selected Room?\nAll reservations will be deleted with it!")
+                .setPositiveButton("ok", (dialogInterface, i) -> delete())
+                .setNegativeButton("cancel", (dialogInterface, i) -> dialogInterface.dismiss()).create().show());
     }
 
     @Override
