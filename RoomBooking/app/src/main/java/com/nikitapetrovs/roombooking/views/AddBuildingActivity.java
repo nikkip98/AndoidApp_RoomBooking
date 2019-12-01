@@ -40,10 +40,8 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
     private GoogleMap mMap;
 
-    private ImageButton backButton;
-    private ImageButton chooseLocation;
-    private Button buttonMap;
-    private Button buttonSubmit;
+    private ImageButton backButton, chooseLocation;
+    private Button buttonMap, buttonSubmit, buttonReset;
     private TextView coordinates;
     private TextView selectedAdress;
     private EditText description;
@@ -73,11 +71,15 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
         floors = findViewById(R.id.textFloors);
         selectedAdress = findViewById(R.id.textViewSelectedAddress);
 
+        buttonReset = findViewById(R.id.buttonReset);
+        buttonReset.setOnClickListener(view -> {reset();});
+
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(view -> finish());
 
         buttonSubmit = findViewById(R.id.submitButton);
         buttonSubmit.setOnClickListener(view -> checkInput());
+
 
         buttonMap = findViewById(R.id.buttonMap);
         buttonMap.setOnClickListener(view -> {
@@ -215,29 +217,25 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
         final String newUrl = toUrl.replaceAll(" ", "%20");
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(newUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL(newUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Accept", "application/json");
 
-                    int status = connection.getResponseCode();
-                    if (status != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " +
-                                connection.getResponseCode());
-                    }
-
-                    connection.disconnect();
-
-                } catch (Exception e) {
-                    Log.d("Adding", "submitReservation: Something went wrong" + e);
+                int status = connection.getResponseCode();
+                if (status != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " +
+                            connection.getResponseCode());
                 }
-            }
 
+                connection.disconnect();
+
+            } catch (Exception e) {
+                Log.d("Adding", "submitReservation: Something went wrong" + e);
+            }
         }).start();
     }
 
@@ -248,5 +246,13 @@ public class AddBuildingActivity extends AppCompatActivity implements OnMapReady
 
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    public void reset() {
+        mMap.clear();
+        done = false;
+        centerIsSet = false;
+        corners = new ArrayList<>();
+        counter = 0;
     }
 }
