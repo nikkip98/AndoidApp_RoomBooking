@@ -124,7 +124,6 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
 
         MarkerOptions marker = new MarkerOptions();
         marker.position(latLng);
-        marker.title(selectedCoordinates);
         mMap.addMarker(marker);
     }
 
@@ -149,7 +148,7 @@ public class AddRoomActivity extends AppCompatActivity implements BuildingReposi
                 building = findBuilding(string);
                 String cords = building.getCenterCoordinates();
 
-
+                mMap.clear();
                 LatLng newLoc = AppUtils.stringToCoordinates(cords);
                 mMap.addPolygon(AppUtils.getPolygon(building));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLoc, 18));

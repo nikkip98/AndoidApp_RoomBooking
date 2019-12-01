@@ -1,0 +1,19 @@
+<?php
+$con=mysqli_connect('student.cs.hioa.no','s325918','','s325918');
+
+$descinn=$_REQUEST['desc'];
+$desc=(String)$descinn;
+
+$coordsinn=$_REQUEST['coords'];
+$coords=(String)$coordsinn;
+
+$floorinn=$_REQUEST['floor'];
+$floor=(String)$floorinn;
+
+$buildinginn=$_REQUEST['building'];
+$building=(String)$buildinginn;
+
+$sql=mysqli_query($con,"insert into rooms values('','$desc', '$coords', '$floor', '$building');");
+
+mysqli_close($con);
+?>

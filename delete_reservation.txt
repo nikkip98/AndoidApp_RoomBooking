@@ -1,0 +1,11 @@
+<?php
+$con=mysqli_connect('student.cs.hioa.no','s325918','','s325918');
+
+$idinn=$_REQUEST['id'];
+
+foreach ($idinn as $id) {
+$sql=mysqli_query($con,"delete from reservations where id = $id;");
+}
+
+mysqli_close($con);
+?>

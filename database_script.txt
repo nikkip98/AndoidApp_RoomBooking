@@ -1,0 +1,25 @@
+drop table reservations;
+drop table rooms;
+drop table buildings;
+
+create table buildings(id integer primary key auto_increment, description varchar(255) NOT NULL, centercoordinates varchar(100), cord1 varchar(100), cord2 varchar(100), cord3 varchar(100), cord4 varchar(100), floors integer);
+create table rooms(id integer primary key auto_increment, description varchar(255) NOT NULL, coordinates varchar(100), floor integer, buildingID integer, foreign key (buildingID) references buildings(id));
+create table reservations(id integer primary key auto_increment, date char(11), timeFrom char(5), timeTo char(5), roomID integer, foreign key (roomID) references rooms(id));
+
+insert into buildings values('','P35','59.919472, 10.735318','59.919107, 10.734571', '59.919447, 10.734670', '59.919942, 10.735351', '59.919275, 10.736076', '4');
+insert into buildings values('','P32','59.920050, 10.736118', '59.920224, 10.735587', '59.920315, 10.736365', '59.919761, 10.736542', '59.919724, 10.735915', '2');
+
+insert into rooms values('','PH170 Auditorium', '59.919453, 10.735152','1', '1');
+insert into rooms values('','PH131 Auditorium', '59.919293, 10.735110','1', '1');
+insert into rooms values('','PE238', '59.919227, 10.735407','2', '1');
+insert into rooms values('','PI234', '59.919265, 10.735690','2', '1');
+insert into rooms values('','PH372', '59.919400, 10.735054','3', '1');
+insert into rooms values('','PH374', '59.919444, 10.735256','3', '1');
+insert into rooms values('','PH355', '59.919441, 10.734835','3', '1');
+insert into rooms values('','PH472', '59.919426, 10.735154','4', '1');
+insert into rooms values('','PH445', '59.919458, 10.735728','4', '1');
+insert into rooms values('','PH439', '59.919232, 10.734666','4', '1');
+
+insert into rooms values('','N010.023', '59.919850, 10.736016','1', '2');
+insert into rooms values('','N020.112', '59.920045, 10.735806','2', '2');
+insert into rooms values('','N020.025', '59.919794, 10.736295','2', '2');

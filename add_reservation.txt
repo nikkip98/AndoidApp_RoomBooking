@@ -1,0 +1,19 @@
+<?php
+$con=mysqli_connect('student.cs.hioa.no','s325918','','s325918');
+
+$idinn=$_REQUEST['ID'];
+$id=(int)$idinn;
+
+$dateinn=$_REQUEST['date'];
+$date=(String)$dateinn;
+
+$timefrominn=$_REQUEST['time_from'];
+$timefrom=(String)$timefrominn;
+
+$timetoinn=$_REQUEST['time_to'];
+$timeto=(String)$timetoinn;
+
+$sql=mysqli_query($con,"insert into reservations  values('','$date', '$timefrom', '$timeto', '$id');");
+
+mysqli_close($con);
+?>
