@@ -73,7 +73,8 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Buildin
         spinnerBuilding.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) adapterView.getChildAt(0)).setTextSize(18);
+                TextView selected = ((TextView) adapterView.getChildAt(0));
+                selected.setTextSize(20);
                 String string = adapterView.getItemAtPosition(i).toString();
                 building = findBuilding(string);
                 System.out.println(string);
